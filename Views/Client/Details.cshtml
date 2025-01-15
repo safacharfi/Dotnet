@@ -1,0 +1,14 @@
+﻿@model sav.Models.Client
+
+<h2>Client Details</h2>
+
+<p>Email: @Model.Email</p>
+<p>Full Name: @Model.Name</p>
+
+<!-- Affichage du montant total des interventions -->
+@if (ViewBag.TotalInterventionAmount != null)
+{
+    <p>Total Intervention Amount: @ViewBag.TotalInterventionAmount</p>
+}
+
+<!-- Autres détails du client -->

@@ -1,0 +1,279 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary-color: #64748b;
+            --background-light: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --success-color: #22c55e;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+        }
+
+        body {
+            background-color: var(--background-light);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            color: var(--text-primary);
+        }
+
+        .sidebar {
+            background: white;
+            width: 280px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem 1rem;
+            z-index: 1000;
+        }
+
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem 2.5rem;
+            max-width: 1400px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 0.875rem 1.25rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 0.75rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+            .menu-item:hover {
+                background: var(--background-light);
+                color: var(--primary-color);
+                transform: translateX(4px);
+            }
+
+            .menu-item.active {
+                background: var(--primary-color);
+                color: white;
+                font-weight: 600;
+            }
+
+        .menu-icon {
+            margin-right: 1rem;
+            font-size: 1.25rem;
+        }
+
+        h2 {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            font-size: 1.75rem;
+        }
+
+        .table {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+            .table thead {
+                background: var(--background-light);
+            }
+
+            .table th {
+                font-weight: 600;
+                color: var(--text-secondary);
+                text-transform: uppercase;
+                font-size: 0.875rem;
+                letter-spacing: 0.05em;
+                padding: 1rem;
+                border-bottom: 2px solid #e2e8f0;
+            }
+
+            .table td {
+                padding: 1rem;
+                color: var(--text-primary);
+                vertical-align: middle;
+                border-bottom: 1px solid #e2e8f0;
+            }
+
+        .btn {
+            padding: 0.625rem 1rem;
+            font-weight: 500;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+            .btn-primary:hover {
+                background: var(--primary-hover);
+                border-color: var(--primary-hover);
+                transform: translateY(-1px);
+            }
+
+        .btn-warning {
+            background: var(--warning-color);
+            border-color: var(--warning-color);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            border-color: var(--danger-color);
+        }
+
+            .btn-warning:hover, .btn-danger:hover {
+                transform: translateY(-1px);
+                filter: brightness(110%);
+            }
+
+        .actions-column {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Logo section styling */
+        .logo-section {
+            display: flex;
+            align-items: center;
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+            .logo-section i {
+                font-size: 1.75rem;
+                color: var(--primary-color);
+                margin-right: 0.75rem;
+            }
+
+            .logo-section h5 {
+                color: var(--text-primary);
+                font-weight: 600;
+                margin: 0;
+                font-size: 1.25rem;
+            }
+
+        /* Add button styling */
+        .add-button {
+            margin-bottom: 1.5rem;
+        }
+
+            .add-button .btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.75rem 1.5rem;
+            }
+
+                .add-button .btn i {
+                    font-size: 1.25rem;
+                }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo-section">
+            <i class="bi bi-shield-lock"></i>
+            <h5>ServicePro Admin</h5>
+        </div>
+
+        <nav>
+            <a href="/Admin/Dashboard" class="menu-item active">
+                <i class="bi bi-grid menu-icon"></i>
+                Dashboard
+            </a>
+            <a href="/Article/Index" class="menu-item">
+                <i class="bi bi-box menu-icon"></i>
+                Articles
+            </a>
+            <a href="/Claim/ViewClaims" class="menu-item">
+                <i class="bi bi-file-text menu-icon"></i>
+                Réclamations
+            </a>
+            <a href="/TechnicalIntervention/Index" class="menu-item">
+                <i class="bi bi-tools menu-icon"></i>
+                Interventions
+            </a>
+            <a href="/SparePart/Index" class="menu-item">
+                <i class="bi bi-gear menu-icon"></i>
+                Pièces de Rechange
+            </a>
+            <a href="/Reports" class="menu-item">
+                <i class="bi bi-bar-chart menu-icon"></i>
+                Rapports
+            </a>
+            <a href="/Settings" class="menu-item">
+                <i class="bi bi-sliders menu-icon"></i>
+                Paramètres
+            </a>
+        </nav>
+
+        <div class="mt-auto pt-4 border-top position-absolute bottom-0 start-0 end-0 p-3">
+            <a href="/Account/Logout" class="menu-item text-danger">
+                <i class="bi bi-box-arrow-right menu-icon"></i>
+                Déconnexion
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h2>Liste des Interventions Techniques</h2>
+
+        <div class="add-button">
+            <a class="btn btn-primary" asp-action="Create">
+                <i class="bi bi-plus-lg"></i>
+                Ajouter une Intervention
+            </a>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Réclamation</th>
+                    <th>Date d'Intervention</th>
+                    <th>Garantie</th>
+                    <th>Coût Main-d'Œuvre</th>
+                    <th>Coût Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var intervention in Model)
+                {
+                    <tr>
+                        <td>@intervention.Claim.Description</td>
+                        <td>@intervention.InterventionDate.ToShortDateString()</td>
+                        <td>@(intervention.IsWarranty ? "Oui" : "Non")</td>
+                        <td>@intervention.LaborCost</td>
+                        <td>@intervention.TotalCost</td>
+                        <td class="actions-column">
+                            <a class="btn btn-warning" asp-action="Edit" asp-route-id="@intervention.TechnicalInterventionId">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@intervention.TechnicalInterventionId">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,304 @@
+﻿@{
+    ViewData["Title"] = "Bienvenue";
+}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ServicePro - Bienvenue</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --accent: #f43f5e;
+            --background: #f8fafc;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+        }
+
+        .page-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .navbar {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .brand {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand i {
+            font-size: 1.5rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            opacity: 0.9;
+            transition: opacity 0.2s;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text {
+            text-align: center;
+            color: white;
+            margin-bottom: 4rem;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+        }
+
+        .cards-wrapper {
+            display: flex;
+            gap: 2rem;
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 1rem;
+            padding: 2.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .login-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-bottom: 1.5rem;
+            font-size: 1.75rem;
+        }
+
+        .client-icon {
+            background-color: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+        }
+
+        .admin-icon {
+            background-color: rgba(244, 63, 94, 0.1);
+            color: var(--accent);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-accent:hover {
+            background: #e11d48;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(244, 63, 94, 0.2);
+        }
+
+        .shape-divider {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+
+        .shape-divider svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 150px;
+        }
+
+        .shape-divider .shape-fill {
+            fill: var(--background);
+        }
+
+        media (max-width: 768px) {
+            .cards-wrapper {
+                flex-direction: column;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .navbar {
+                padding: 1rem;
+            }
+
+            .nav-links a {
+                margin-left: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <header class="header">
+            <nav class="navbar">
+                <a href="/" class="brand">
+                    <i class="bi bi-shield-check"></i>
+                    ServicePro
+                </a>
+                <div class="nav-links">
+                    <a href="#fonctionnalites">Fonctionnalités</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </nav>
+
+            <main class="main-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">Bienvenue sur ServicePro</h1>
+                    <p class="hero-subtitle">Votre plateforme de service après-vente professionnelle</p>
+                </div>
+
+                <div class="cards-wrapper">
+                    <div class="login-card">
+                        <div class="card-icon client-icon">
+                            <i class="bi bi-person"></i>
+                        </div>
+                        <h2 class="card-title">Espace Client</h2>
+                        <p class="card-description">
+                            Accédez à votre espace personnel pour gérer vos demandes
+                        </p>
+                        <a asp-controller="Client" asp-action="Authenticate" class="btn btn-primary">
+                            Connexion Client
+                        </a>
+                    </div>
+
+                    <div class="login-card">
+                        <div class="card-icon admin-icon">
+                            <i class="bi bi-person-badge"></i>
+                        </div>
+                        <h2 class="card-title">Espace Admin</h2>
+                        <p class="card-description">
+                            Gérez les interventions et le support technique
+                        </p>
+                        <a asp-controller="Admin" asp-action="Login" class="btn btn-accent">
+                            Connexion Admin
+                        </a>
+
+                    </div>
+                </div>
+            </main>
+
+            <div class="shape-divider">
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+                </svg>
+            </div>
+        </header>
+    </div>
+</body>
+</html>

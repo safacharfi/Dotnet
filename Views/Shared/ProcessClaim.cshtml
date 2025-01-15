@@ -1,0 +1,53 @@
+﻿namespace sav.Views.Shared
+{
+   @model sav.Models.Claim
+
+<h2>Traiter la Réclamation</h2>
+
+<div>
+    <h4>Détails de la Réclamation</h4>
+    <dl class="row">
+        <dt class="col-sm-2">Description</dt>
+        <dd class="col-sm-10">@Model.Description</dd>
+        <dt class="col-sm-2">Client</dt>
+        <dd class="col-sm-10">@Model.Client?.Name</dd>
+        <dt class="col-sm-2">Article</dt>
+        <dd class="col-sm-10">@Model.Article?.Name</dd>
+        <dt class="col-sm-2">Date</dt>
+        <dd class="col-sm-10">@Model.Date.ToShortDateString()</dd>
+    </dl>
+
+    <form asp-action="ProcessClaim" method="post">
+        <input type="hidden" asp-for="ClaimId" />
+
+        <div class="form-group">
+            <label for="EmployeeId">Choisir un Employé</label>
+            <select id="EmployeeId" name="employeeId" class="form-control">
+                @foreach (var employee in ViewBag.Employees)
+                {
+                    <option value="@employee.EmployeeId">@employee.Name</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="LaborCost">Coût de Main-d'Œuvre</label>
+            <input type="text" id="LaborCost" name="laborCost" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <label for="SpareParts">Choisir les Pièces de Rechange</label>
+            <select id="SpareParts" name="sparePartIds" class="form-control" multiple>
+                @foreach (var sparePart in ViewBag.SpareParts)
+                {
+                    <option value="@sparePart.SparePartId">@sparePart.Name</option>
+                }
+            </select>
+            <small>Maintenez Ctrl pour sélectionner plusieurs pièces.</small>
+        </div>
+
+        <button type="submit" class="btn btn-success">Assigner Intervention</button>
+        <a href="@Url.Action("PendingClaims", "Claim")" class="btn btn-primary">Retour</a>
+    </form>
+</div>
+}

@@ -1,0 +1,276 @@
+﻿@model sav.ViewModels.ClaimViewModel
+@{
+    ViewData["Title"] = "Nouvelle Réclamation";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        .nav-link:hover {
+            color: #0d6efd !important;
+            transition: color 0.3s ease;
+        }
+        .custom-form-label {
+            font-weight: 500;
+            color: #344767;
+        }
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+        }
+        .help-text {
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+        .progress-indicator {
+            position: relative;
+            padding: 20px;
+        }
+        .progress-step {
+            position: relative;
+            padding-bottom: 20px;
+        }
+        .progress-step::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: #e9ecef;
+        }
+        .progress-step:last-child::before {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar (même que précédemment) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <i class="bi bi-headset me-2 fs-3"></i>
+                <span>ServicePro</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/Home"><i class="bi bi-house-door me-1"></i>Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/About"><i class="bi bi-info-circle me-1"></i>À Propos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/Contact"><i class="bi bi-envelope me-1"></i>Contact</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" id="profileDropdown" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle me-2"></i>
+                            Safa charfi
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="/Profile"><i class="bi bi-person me-2"></i>Mon Profil</a></li>
+                            <li><a class="dropdown-item" href="/Settings"><i class="bi bi-gear me-2"></i>Paramètres</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="/Account/Logout"><i class="bi bi-box-arrow-right me-2"></i>Déconnexion</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="bg-light py-4 mb-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="display-6 mb-1">Nouvelle Réclamation</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a href="/" class="text-decoration-none">Accueil</a></li>
+                            <li class="breadcrumb-item"><a href="/Claims" class="text-decoration-none">Réclamations</a></li>
+                            <li class="breadcrumb-item active">Nouvelle Réclamation</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <a href="/Claims" class="btn btn-outline-primary">
+                        <i class="bi bi-arrow-left me-2"></i>Retour aux réclamations
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mb-5">
+        <div class="row">
+            <!-- Form Column -->
+            <div class="col-md-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <form asp-action="Create" method="post" class="needs-validation" novalidate>
+                            <div class="mb-4">
+                                <label class="form-label custom-form-label">Client <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" value="Safa Charfi" readonly>
+                                <input type="hidden" name="ClientName" value="Safa Charfi">
+                                <div class="help-text mt-1">Le client associé à cette réclamation est "Safa Charfi".</div>
+                            </div>
+
+                            <!-- Article Selection -->
+                            <div class="mb-4">
+                                <label asp-for="ArticleId" class="form-label custom-form-label">Article <span class="text-danger">*</span></label>
+                                <select asp-for="ArticleId" asp-items="ViewBag.Articles" class="form-select">
+                                    <option value="">-- Sélectionner un article --</option>
+                                </select>
+                                <span asp-validation-for="ArticleId" class="text-danger"></span>
+                                <div class="help-text mt-1">Choisissez l'article concerné par le problème</div>
+                            </div>
+
+                            <!-- Description -->
+                            <div class="mb-4">
+                                <label asp-for="Description" class="form-label custom-form-label">Description du problème <span class="text-danger">*</span></label>
+                                <textarea asp-for="Description" class="form-control" rows="5" placeholder="Décrivez en détail le problème rencontré..."></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                                <div class="help-text mt-1">Soyez aussi précis que possible dans votre description</div>
+                            </div>
+
+                            <!-- Status -->
+                            <div class="mb-4">
+                                <label asp-for="Status" class="form-label custom-form-label">Priorité</label>
+                                <select asp-for="Status" class="form-select">
+                                    <option value="Normal">Normal</option>
+                                    <option value="Urgent">Urgent</option>
+                                    <option value="Critique">Critique</option>
+                                </select>
+                                <span asp-validation-for="Status" class="text-danger"></span>
+                                <div class="help-text mt-1">Sélectionnez le niveau d'urgence de votre réclamation</div>
+                            </div>
+
+                            <!-- Submit Buttons -->
+                            <div class="d-flex justify-content-between align-items-center">
+                                <button type="button" class="btn btn-outline-secondary">
+                                    <i class="bi bi-x-circle me-2"></i>Annuler
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-check-circle me-2"></i>Soumettre la réclamation
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Column -->
+            <div class="col-md-4">
+                <!-- Process Steps -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Processus de Réclamation</h5>
+                        <div class="progress-indicator">
+                            <div class="progress-step d-flex">
+                                <div class="bg-primary rounded-circle p-2 text-white" style="width: 32px; height: 32px;">
+                                    <i class="bi bi-1-circle-fill"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h6 class="mb-1">Soumission</h6>
+                                    <p class="small text-muted mb-0">Remplissez le formulaire</p>
+                                </div>
+                            </div>
+                            <div class="progress-step d-flex">
+                                <div class="bg-primary rounded-circle p-2 text-white" style="width: 32px; height: 32px;">
+                                    <i class="bi bi-2-circle-fill"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h6 class="mb-1">Traitement</h6>
+                                    <p class="small text-muted mb-0">Analyse par notre équipe</p>
+                                </div>
+                            </div>
+                            <div class="progress-step d-flex">
+                                <div class="bg-primary rounded-circle p-2 text-white" style="width: 32px; height: 32px;">
+                                    <i class="bi bi-3-circle-fill"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h6 class="mb-1">Résolution</h6>
+                                    <p class="small text-muted mb-0">Solution et suivi</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Help Card -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Besoin d'aide ?</h5>
+                        <p class="text-muted small mb-4">Notre équipe de support est disponible pour vous aider dans votre démarche.</p>
+                        <div class="d-grid gap-2">
+                            <a href="#" class="btn btn-outline-primary">
+                                <i class="bi bi-question-circle me-2"></i>Consulter la FAQ
+                            </a>
+                            <a href="#" class="btn btn-outline-success">
+                                <i class="bi bi-chat-dots me-2"></i>Chat en direct
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>ServicePro</h5>
+                    <p class="small">Votre partenaire de confiance pour un service client d'excellence.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Liens Rapides</h5>
+                    <ul class="list-unstyled small">
+                        <li><a href="/FAQ" class="text-white-50">FAQ</a></li>
+                        <li><a href="/Privacy" class="text-white-50">Politique de confidentialité</a></li>
+                        <li><a href="/Terms" class="text-white-50">Conditions d'utilisation</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact</h5>
+                    <p class="small text-white-50">
+                        <i class="bi bi-telephone me-2"></i>+1 234 567 890<br>
+                        <i class="bi bi-envelope me-2"></i>support@servicepro.com
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Form validation
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+</body>
+</html>

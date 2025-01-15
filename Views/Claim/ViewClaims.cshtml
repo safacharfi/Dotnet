@@ -1,0 +1,344 @@
+﻿@{
+    ViewData["Title"] = "Mes Réclamations";
+
+    var claims = Model as IEnumerable<sav.Models.Claim> ?? new List<sav.Models.Claim>();
+
+    var pendingClaims = claims
+        .Where(claim => string.Equals(claim.Status?.Trim(), "en attente", StringComparison.OrdinalIgnoreCase))
+        .ToList();
+}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4062F6;
+            --secondary-color: #1e40af;
+            --background-light: #f8fafc;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+        }
+
+        body {
+            background-color: var(--background-light);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 1rem;
+            border: none;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+            .table thead th {
+                background-color: var(--background-light);
+                border-bottom: none;
+                color: var(--text-secondary);
+                font-weight: 600;
+                padding: 1rem;
+            }
+
+            .table tbody td {
+                padding: 1rem;
+                vertical-align: middle;
+            }
+
+        .btn-custom {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+        }
+
+        .action-buttons .btn {
+            padding: 0.4rem 0.8rem;
+            border-radius: 0.5rem;
+            margin-right: 0.5rem;
+        }
+
+        .text-truncate-custom {
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .sidebar {
+            background: white;
+            width: 280px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            box-shadow: 2px 0 4px rgba(0,0,0,0.05);
+            padding: 1.5rem;
+        }
+
+        :root {
+            --primary-color: #4062F6;
+            --secondary-color: #1e40af;
+            --background-light: #f8fafc;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+        }
+
+        body {
+            background-color: var(--background-light);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .sidebar {
+            background: white;
+            width: 280px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            box-shadow: 2px 0 4px rgba(0,0,0,0.05);
+            padding: 1.5rem;
+        }
+
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 1rem;
+            border: none;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+            .dashboard-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            }
+
+        .stats-card {
+            background: linear-gradient(135deg, #ffffff, var(--background-light));
+            border-radius: 1rem;
+            border: 1px solid rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+            .menu-item:hover {
+                background: var(--background-light);
+                color: var(--primary-color);
+            }
+
+            .menu-item.active {
+                background: var(--primary-color);
+                color: white;
+            }
+
+        .menu-icon {
+            margin-right: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .btn-custom {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="d-flex align-items-center mb-4 pb-3 border-bottom">
+            <i class="bi bi-shield-lock fs-3 text-primary me-2"></i>
+            <h5 class="mb-0">ServicePro Admin</h5>
+        </div>
+
+        <nav>
+            <a href="/Admin/Dashboard" class="menu-item active">
+                <i class="bi bi-grid menu-icon"></i>
+                Dashboard
+            </a>
+            <a href="/Article/Index" class="menu-item">
+                <i class="bi bi-box menu-icon"></i>
+                Articles
+            </a>
+            <a href="/Claim/ViewClaims" class="menu-item">
+                <i class="bi bi-file-text menu-icon"></i>
+                Réclamations
+            </a>
+            <a href="/TechnicalIntervention/Index" class="menu-item">
+                <i class="bi bi-tools menu-icon"></i>
+                Interventions
+            </a>
+            <a href="/SparePart/Index" class="menu-item">
+                <i class="bi bi-gear menu-icon"></i>
+                Pièces de Rechange
+            </a>
+            <a href="/Reports" class="menu-item">
+                <i class="bi bi-bar-chart menu-icon"></i>
+                Rapports
+            </a>
+            <a href="/Settings" class="menu-item">
+                <i class="bi bi-sliders menu-icon"></i>
+                Paramètres
+            </a>
+        </nav>
+
+        <div class="mt-auto pt-4 border-top position-absolute bottom-0 start-0 end-0 p-3">
+            <a href="/Account/Logout" class="menu-item text-danger">
+                <i class="bi bi-box-arrow-right menu-icon"></i>
+                Déconnexion
+            </a>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3 mb-0">Mes Réclamations</h1>
+            <button class="btn btn-primary btn-custom">
+                <i class="bi bi-plus-lg me-2"></i>Nouvelle Réclamation
+            </button>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="ps-4">#Référence</th>
+                            <th>Article</th>
+                            <th>Description</th>
+                            <th>Statut</th>
+                            <th>Date</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (pendingClaims.Count > 0)
+                        {
+                            foreach (var claim in pendingClaims)
+                            {
+                                <tr>
+                                    <td class="ps-4">
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-file-text me-2 text-primary"></i>
+                                            #@claim.ClaimId
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="text-secondary">@claim.Article?.Name </span>
+                                    </td>
+                                    <td>
+                                        <span class="text-truncate-custom d-inline-block">
+                                            @claim.Description
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @{
+                                            var statusClass = claim.Status?.ToLower() switch
+                                            {
+                                                "en attente" => "bg-warning bg-opacity-10 text-warning",
+                                                "en cours" => "bg-info bg-opacity-10 text-info",
+                                                "résolu" => "bg-success bg-opacity-10 text-success",
+                                                "fermé" => "bg-secondary bg-opacity-10 text-secondary",
+                                                _ => "bg-primary bg-opacity-10 text-primary"
+                                            };
+                                        }
+                                        <span class="badge @statusClass status-badge">
+                                            @if (claim.Status?.ToLower() == "en attente")
+                                            {
+                                                <i class="bi bi-clock me-1"></i>
+                                            }
+                                            else if (claim.Status?.ToLower() == "en cours")
+                                            {
+                                                <i class="bi bi-arrow-repeat me-1"></i>
+                                            }
+                                            else if (claim.Status?.ToLower() == "résolu")
+                                            {
+                                                <i class="bi bi-check-circle me-1"></i>
+                                            }
+                                            else if (claim.Status?.ToLower() == "fermé")
+                                            {
+                                                <i class="bi bi-lock me-1"></i>
+                                            }
+                                            @claim.Status
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <i class="bi bi-calendar-event me-2 text-secondary"></i>
+                                    <td>
+                                        <i class="bi bi-calendar-event me-2 text-secondary"></i>
+                                            @claim.Date.ToString("dd/MM/yyyy")
+                                    </td>
+                                    </td>
+                                    <td class="text-end pe-4">
+                                        <button class="btn btn-light btn-sm me-2">
+                                            <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button class="btn btn-light btn-sm text-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center py-4 text-secondary">
+                                    <i class="bi bi-inbox-fill fs-4 d-block mb-2"></i>
+                                    Aucune réclamation en attente
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
